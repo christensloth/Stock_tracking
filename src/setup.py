@@ -5,6 +5,7 @@ import os
 packages = [
     'yfinance',
     'openpyxl',
+    'xlsxwriter'
 ]
 
 def install_package(package):
