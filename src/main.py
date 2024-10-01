@@ -23,7 +23,7 @@ def fetch_stocks():
     
     with pd.ExcelWriter('stocks.xlsx', engine='xlsxwriter') as writer:
         for stock_name in stock_names_split:
-            history = tickers.tickers[stock_name].history(period="1mo")
+            history = tickers.tickers[stock_name].history(period="1mo",actions=True)
             if history.index.tz is not None:
                 history.index = history.index.tz_localize(None)
             
