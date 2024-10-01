@@ -26,10 +26,9 @@ def fetch_stocks():
             history = tickers.tickers[stock_name].history(period="1mo",actions=True)
             if history.index.tz is not None:
                 history.index = history.index.tz_localize(None)
-            
-            history.insert(0, 'Ticker', stock_name)
-            
-            history.to_excel(writer, sheet_name=stock_name, index=True)
+            adjusted_history = history[['Open', 'High', 'Low', 'Close', 'Volume']]
+            adjusted_history.insert(0, 'Ticker', stock_name)
+            adjusted_history.to_excel(writer, sheet_name=stock_name, index=True)
 
 def main():
     cleanup_directory()
