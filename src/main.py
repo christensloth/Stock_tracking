@@ -20,11 +20,15 @@ def fetch_stocks():
     print("You are tracking these stocks:", stock_names_single_string)
 
     tickers = yf.Tickers(stock_names_single_string)
+    
     with pd.ExcelWriter('stocks.xlsx', engine='xlsxwriter') as writer:
         for stock_name in stock_names_split:
             history = tickers.tickers[stock_name].history(period="1mo")
             if history.index.tz is not None:
                 history.index = history.index.tz_localize(None)
+            
+            history.insert(0, 'Ticker', stock_name)
+            
             history.to_excel(writer, sheet_name=stock_name, index=True)
 
 def main():
